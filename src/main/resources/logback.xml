@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE logback>
+<configuration>
+	<property name="LOG_FILE" value="${log.path:-.}/cmp.log}"/>
+	<include resource="org/springframework/boot/logging/logback/base.xml"/>
+	<logger name="com.amazonaws" level="INFO"/>
+	<logger name="org.hibernate" level="ERROR"/>
+	<logger name="org.springframework" level="INFO"/>
+	<logger name="org.springframework.web" level="WARN"/>
+	<logger name="org.thymeleaf" level="INFO"/>
+
+	<appender name="event" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<Append>true</Append>
+		<File>${log.path:-.}/reserve.log</File>
+		<encoder>
+			<pattern>${FILE_LOG_PATTERN}</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log.path:-.}/reserve.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<maxHistory>15</maxHistory>
+		</rollingPolicy>
+	</appender>
+	<logger name="org.cmp.web.event" level="INFO">
+		<appender-ref ref="event" />
+	</logger>
+</configuration>
